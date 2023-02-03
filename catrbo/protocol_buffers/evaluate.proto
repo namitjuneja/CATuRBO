@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+service PhaFic {
+    /* runs solver for the requested point and 
+    returns computed distance from the target morphology */
+    rpc evaluate(request) returns(response);
+}
+
+message request {
+    map<string, float> acquired_point = 1;
+    map<string, float> lower_bounds = 2;
+    map<string, float> upper_bounds = 3;
+}
+
+message response {
+    int32 error_code = 1;
+    float distance = 2;
+    int32 time_taken = 3;
+}
+
+/* command to run protocol buffer compiler and generate python stubs
+python3 -m grpc_tools.protoc --proto_path=./ --python_out=./ --grpc_python_out=./ evaluate.proto */
